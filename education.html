@@ -140,9 +140,17 @@
             background-color: #333;
             border-radius: 2px;
         }
+        /* --- MODIFIED: Timeline Item for Scroll Animation --- */
         .timeline-item {
             position: relative;
             margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .timeline-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         .timeline-item:last-child {
             margin-bottom: 0;
@@ -234,7 +242,7 @@
                     <div class="timeline-item">
                         <div class="glass-card p-6 md:p-8">
                             <div class="flex flex-col md:flex-row items-center gap-6">
-                                <img src="https://placehold.co/400x400/1a1a1a/f0f0f0?text=SJCE" alt="SJCE College Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
+                                <img src="college-main.jpg" alt="SJCE College Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
                                 <div class="w-full md:w-2/3">
                                     <p class="text-sm primary-red font-medium mb-1">2024 — 2028</p>
                                     <h3 class="text-2xl font-semibold text-white mb-2">Bachelor of Engineering, CSE</h3>
@@ -247,7 +255,7 @@
                     <div class="timeline-item">
                         <div class="glass-card p-6 md:p-8">
                             <div class="flex flex-col md:flex-row items-center gap-6">
-                                <img src="https://placehold.co/400x400/1a1a1a/f0f0f0?text=PU+College" alt="Shanthinikethan PU College Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
+                                <img src="college-2.jpg" alt="Shanthinikethan PU College Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
                                 <div class="w-full md:w-2/3">
                                     <p class="text-sm primary-red font-medium mb-1">6th — 12th</p>
                                     <h3 class="text-2xl font-semibold text-white mb-2">Pre-University Education</h3>
@@ -260,7 +268,7 @@
                     <div class="timeline-item">
                         <div class="glass-card p-6 md:p-8">
                             <div class="flex flex-col md:flex-row items-center gap-6">
-                                <img src="https://placehold.co/400x400/1a1a1a/f0f0f0?text=BGS+School" alt="BGS Public School Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
+                                <img src="college-3.jpg" alt="BGS Public School Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
                                 <div class="w-full md:w-2/3">
                                     <p class="text-sm primary-red font-medium mb-1">1st — 5th</p>
                                     <h3 class="text-2xl font-semibold text-white mb-2">Primary School Education</h3>
@@ -316,7 +324,33 @@
             mobileMenuIcon.classList.toggle('fa-times', !mobileMenu.classList.contains('hidden'));
         });
 
-        // --- NEW: Extravagant Hover Effect for Education Cards ---
+        // --- NEW: Scroll Reveal Animation for Timeline Items ---
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const observerOptions = {
+            root: null, // Use the viewport as the container
+            rootMargin: '0px',
+            threshold: 0.1 // Trigger when at least 10% of the item is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                // When an element becomes visible in the viewport
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // We can stop observing it after it has become visible
+                    // so the animation doesn't re-trigger.
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Start observing each timeline item
+        timelineItems.forEach(item => {
+            observer.observe(item);
+        });
+
+
+        // --- Extravagant Hover Effect for Education Cards ---
         document.querySelectorAll('.glass-card').forEach(card => {
             const maxRotate = 8; // Max rotation in degrees, adjust for more/less effect
 
@@ -428,3 +462,4 @@
     </script>
 </body>
 </html>
+
