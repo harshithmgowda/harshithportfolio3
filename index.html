@@ -6,6 +6,10 @@
     <title>Harshith Gowda M | CSE Student Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ADDED: Devicon CDN for the new skill icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -163,20 +167,87 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Glassmorphism Card (Updated for 3D Tilt & Glow) */
-        .glass-card {
+        /* --- 3D ROTATING SKILLS CAROUSEL (NEWLY ADDED & THEMED) --- */
+            
+        /* The rotation animation */
+        @keyframes autoRun{
+            from{
+                transform: perspective(1000px) rotateX(-16deg) rotateY(0deg);
+            }to{
+                transform: perspective(1000px) rotateX(-16deg) rotateY(360deg);
+            }
+        }
+        
+        /* Positioned the carousel inside the #skills section */
+        #skills .slider {
+            position: relative;
+            width: 220px;
+            height: 300px; 
+            margin: 60px auto; /* Centered it and gave it vertical space */
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            animation: autoRun 25s linear infinite; /* Slowed it down a bit */
+            z-index: 2;
+        }
+        
+        /* Styling the carousel items */
+        #skills .slider .item {
+            position: absolute;
+            inset: 0 0 0 0;
+            
+            /* Places items in a circle */
+            transform: 
+                rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+                translateZ(350px); /* Tighter radius */
+
+            /* --- Dark "Frosted Glass" (Glassmorphism) Effect --- */
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border-radius: 12px;
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
             border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.2s ease-out; /* Faster transition for tilt */
-            transform-style: preserve-3d;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            
+            /* Centering the icon and text */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            
+            transition: all 0.3s ease;
         }
-        .glass-card:hover {
+        
+        #skills .slider .item:hover {
+            /* Make it pop on hover */
+            transform: 
+                rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+                translateZ(360px) /* Keep its circle position + slight pop */
+                translateY(-10px) /* Move it up */
+                scale(1.05); /* Make it slightly bigger */
+            
+            /* Portfolio's red glow effect */
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(229, 9, 20, 0.5);
-            box-shadow: 0 0 25px rgba(229, 9, 20, 0.5); /* Enhanced Glow */
+            box-shadow: 0 0 25px rgba(229, 9, 20, 0.5);
         }
+        
+        /* Styling the Icon (Portfolio Theme) */
+        #skills .slider .item i {
+            font-size: 5em;
+            color: var(--primary-red); /* Use portfolio's red */
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        /* Styling the Text (Portfolio Theme) */
+        #skills .slider .item h3 {
+            font-family: 'IBM Plex Mono', monospace; /* Use portfolio's font */
+            font-size: 1.5em; 
+            color: #f0f0f0; /* Use portfolio's text color */
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        /* --- END OF NEW CAROUSEL CSS --- */
+
 
         /* Section Dividers */
         .section-divider {
@@ -332,6 +403,36 @@
         #side-nav a:hover::before {
             opacity: 1;
         }
+        
+        /* --- Responsive Styles for Carousel --- */
+        @media screen and (max-width: 1023px) {
+            #skills .slider {
+                width: 180px;
+                height: 220px;
+            }
+            #skills .slider .item {
+                transform: 
+                    rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+                    translateZ(280px); /* Smaller circle radius */
+            }
+            #skills .slider .item i { font-size: 4em; }
+            #skills .slider .item h3 { font-size: 1.2em; }
+        }
+        @media screen and (max-width: 767px) {
+            #skills .slider {
+                width: 130px;
+                height: 180px;
+                margin: 40px auto;
+            }
+            #skills .slider .item {
+                transform: 
+                    rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
+                    translateZ(180px); /* Even smaller circle radius */
+                gap: 10px;
+            }
+            #skills .slider .item i { font-size: 3em; }
+            #skills .slider .item h3 { font-size: 1em; }
+        }
     </style>
 </head>
 <body class="bg-black">
@@ -392,7 +493,7 @@
                         </p>
                         <p class="text-sm mb-4 text-gray-300">
                             I thrive on challenges and am constantly exploring new technologies. My core interests lie in web development, machine learning, and competitive programming. I believe in the power of collaboration and am always eager to work on projects that create a meaningful impact.
-                        </p>
+                        </d>
                     </div>
                 </div>
             </div>
@@ -405,20 +506,60 @@
                 </svg>
             </div>
             <div class="container mx-auto px-6">
-                <h2 class="text-2xl md:text-3xl font-semibold text-center mb-12 scroll-target slide-in-up">My <span class="primary-red">Skills</span></h2>
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8">
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fab fa-python text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">Python</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fab fa-java text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">Java</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 primary-red mb-4 mx-auto fill-current"><title>C</title><path d="M13.244 0C5.934 0 0 5.934 0 13.244s5.934 13.244 13.244 13.244S26.488 20.554 26.488 13.244 20.554 0 13.244 0zm-1.12 2.378c5.448 0 9.872 4.425 9.872 9.872s-4.425 9.872-9.872 9.872-9.872-4.425-9.872-9.872 4.425-9.872 9.872-9.872zm-2.06 4.394c-2.43 0-4.395 1.966-4.395 4.395s1.965 4.395 4.395 4.395c.57 0 1.115-.108 1.625-.314v-2.31c-.48.243-1.008.38-1.558.38-1.348 0-2.44-1.09-2.44-2.44s1.092-2.44 2.44-2.44c.55 0 1.078.138 1.558.38v-2.31c-.51-.205-1.054-.313-1.625-.313zm5.02 0c-2.43 0-4.395 1.966-4.395 4.395s1.965 4.395 4.395 4.395c.57 0 1.115-.108 1.625-.314v-2.31c-.48.243-1.008.38-1.558.38-1.348 0-2.44-1.09-2.44-2.44s1.092-2.44 2.44-2.44c.55 0 1.078.138 1.558.38v-2.31c-.51-.205-1.054-.313-1.625-.313z"/></svg><h3 class="text-base font-medium">C Programming</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fab fa-js-square text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">JavaScript</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fab fa-react text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">React</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 primary-red mb-4 mx-auto fill-current"><title>Flutter</title><path d="M14.314 0L2.3 12 6 15.7 14.314 7.414l5.372 5.372L14.314 18.157l-3.472-3.472-6.214 6.214L10.857 24l13.143-13.143L14.314 0z"/></svg><h3 class="text-base font-medium">Flutter</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fab fa-node-js text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">Node.js</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fas fa-database text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">SQL</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fab fa-html5 text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">HTML5</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fab fa-css3-alt text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">CSS3</h3></div>
-                    <div class="glass-card p-6 text-center scroll-target slide-in-up"><i class="fab fa-git-alt text-5xl primary-red mb-4"></i><h3 class="text-base font-medium">Git</h3></div>
+                <h2 class="text-2xl md:text-3xl font-semibold text-center mb-12 scroll-target visible">My <span class="primary-red">Skills</span></h2>
+                
+                <!-- === REPLACED: Static grid is gone === -->
+                
+                <!-- === NEW: Rotating Carousel Added === -->
+                <!-- I used the skills from your original portfolio -->
+                <div class="slider" style="--quantity: 11">
+                    <div class="item" style="--position: 1">
+                        <i class="devicon-python-plain"></i>
+                        <h3>Python</h3>
+                    </div>
+                    <div class="item" style="--position: 2">
+                        <i class="devicon-java-plain"></i>
+                        <h3>Java</h3>
+                    </div>
+                    <div class="item" style="--position: 3">
+                        <i class="devicon-c-plain"></i>
+                        <h3>C</h3>
+                    </div>
+                    <div class="item" style="--position: 4">
+                        <i class="devicon-javascript-plain"></i>
+                        <h3>JavaScript</h3>
+                    </div>
+                    <div class="item" style="--position: 5">
+                        <i class="devicon-react-original"></i>
+                        <h3>React</h3>
+                    </div>
+                    <div class="item" style="--position: 6">
+                        <i class="devicon-flutter-plain"></i>
+                        <h3>Flutter</h3>
+                    </div>
+                    <div class="item" style="--position: 7">
+                        <i class="devicon-nodejs-plain"></i>
+                        <h3>Node.js</h3>
+                    </div>
+                    <div class="item" style="--position: 8">
+                        <i class="devicon-mysql-plain"></i>
+                        <h3>SQL</h3>
+                    </div>
+                    <div class="item" style="--position: 9">
+                        <i class="devicon-html5-plain"></i>
+                        <h3>HTML5</h3>
+                    </div>
+                    <div class="item" style="--position: 10">
+                        <i class="devicon-css3-plain"></i>
+                        <h3>CSS3</h3>
+                    </div>
+                    <div class="item" style="--position: 11">
+                        <i class="devicon-git-plain"></i>
+                        <h3>Git</h3>
+                    </div>
                 </div>
+                <!-- === END OF CAROUSEL === -->
+
             </div>
             <div class="section-divider">
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -541,33 +682,20 @@
         // Scroll animations
         const scrollObserver = new IntersectionObserver((entries) => entries.forEach(entry => entry.target.classList.toggle('visible', entry.isIntersecting)), { threshold: 0.1 });
         document.querySelectorAll('.scroll-target').forEach(target => scrollObserver.observe(target));
-        document.querySelectorAll('#skills .scroll-target').forEach((card, i) => card.style.transitionDelay = `${i * 100}ms`);
+        // Note: The card-by-card animation delay was removed as the cards are gone.
 
         // Scroll-to-top button
         const scrollTopBtn = document.getElementById('scrollTopBtn');
         window.onscroll = () => scrollTopBtn.classList.toggle('show', document.body.scrollTop > 300 || document.documentElement.scrollTop > 300);
         scrollTopBtn.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
 
-        // 3D Tilt Effect for Glass Cards
-        const cards = document.querySelectorAll('.glass-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                const rotateX = -y / 20;
-                const rotateY = x / 20;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-            });
-        });
+        // REMOVED: 3D Tilt Effect for Glass Cards
+        // This was conflicting with the carousel's CSS animations,
+        // and the '.glass-card' elements they applied to have been replaced.
 
         // --- Raining Code Animation ---
         const canvas = document.getElementById('raining-code-canvas');
-        // 🚨 THIS IS THE FIX! Changed 'd' to '2d'
-        const ctx = canvas.getContext('2d'); 
+        const ctx = canvas.getContext('2d'); // Corrected from 'd'
 
         let animationFrameId;
         const fontSize = 16;
@@ -643,3 +771,4 @@
     </script>
 </body>
 </html>
+
