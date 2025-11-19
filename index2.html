@@ -10,12 +10,12 @@
     <!-- Devicon CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     
-    <!-- ADDED: Noto Serif Kannada Font -->
+    <!-- Noto Serif Kannada Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Kannada:wght@100..900&display=swap" rel="stylesheet">
     
-    <!-- IBM Plex Mono kept for code snippets if needed -->
+    <!-- IBM Plex Mono kept for code snippets -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
@@ -26,16 +26,13 @@
             --mouse-y: 50vh;
         }
 
-        /* Custom Styles - Updated Font Family */
         body {
-            /* Applied the requested Kannada Font */
             font-family: 'Noto Serif Kannada', serif; 
             background-color: #0a0a0a;
             color: #f0f0f0;
             scroll-behavior: smooth;
         }
 
-        /* Code font for specific elements like the background rain */
         .code-font {
             font-family: 'IBM Plex Mono', monospace;
         }
@@ -52,23 +49,12 @@
             pointer-events: none;
         }
         
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-red);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-red-dark);
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-red); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-red-dark); }
 
-        .primary-red {
-            color: var(--primary-red);
-        }
+        .primary-red { color: var(--primary-red); }
         
         #header.scrolled {
             background-color: #000;
@@ -78,35 +64,43 @@
         .nav-link {
             position: relative;
             transition: color 0.3s ease;
-            font-weight: 500; /* Slightly bolder for Kannada readability */
+            font-weight: 500;
         }
 
         .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-red);
-            transition: width 0.3s ease;
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 50%;
+            transform: translateX(-50%); background-color: var(--primary-red); transition: width 0.3s ease;
         }
 
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: white;
-        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link:hover, .nav-link.active { color: white; }
         
+        /* Language Switcher Button Style */
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border: 1px solid var(--primary-red);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            background: rgba(229, 9, 20, 0.1);
+        }
+        .lang-btn:hover {
+            background: var(--primary-red);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+        }
+        /* English text inside the button */
+        .en-text {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+        }
+
         /* Shimmer Button Effect */
         .shimmer-btn {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            position: relative; overflow: hidden; transition: all 0.3s ease;
             box-shadow: 0 0 5px rgba(229, 9, 20, 0);
         }
         .shimmer-btn:hover {
@@ -114,299 +108,109 @@
             box-shadow: 0 0 15px rgba(229, 9, 20, 0.8), 0 0 25px rgba(229, 9, 20, 0.6);
         }
         .shimmer-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-20deg);
-            transition: left 0.7s ease-in-out;
+            transform: skewX(-20deg); transition: left 0.7s ease-in-out;
         }
-        .shimmer-btn:hover::before {
-            left: 150%;
-        }
+        .shimmer-btn:hover::before { left: 150%; }
 
-        #raining-code-canvas {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
+        #raining-code-canvas { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; }
+        #home .container { position: relative; z-index: 2; }
 
-        #home .container {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Typing animation */
         .typing-cursor {
-            display: inline-block;
-            width: 8px;
-            height: 1em;
-            background-color: var(--primary-red);
-            animation: blink 0.7s infinite;
-            margin-left: 4px;
-            position: relative;
-            top: 0.1em;
+            display: inline-block; width: 8px; height: 1em; background-color: var(--primary-red);
+            animation: blink 0.7s infinite; margin-left: 4px; position: relative; top: 0.1em;
         }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
+        @keyframes blink { 50% { opacity: 0; } }
         
         .animated-gradient {
             background: linear-gradient(90deg, #ff4d4d, var(--primary-red), #ff4d4d);
             background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: gradient-flow 4s linear infinite;
         }
+        @keyframes gradient-flow { 0% { background-position: 200% 50%; } 100% { background-position: 0% 50%; } }
 
-        @keyframes gradient-flow {
-            0% { background-position: 200% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 3D ROTATING SKILLS CAROUSEL */
-        @keyframes autoRun{
-            from{ transform: perspective(1000px) rotateX(-16deg) rotateY(0deg); }
-            to{ transform: perspective(1000px) rotateX(-16deg) rotateY(360deg); }
-        }
-        
+        /* 3D Skills Carousel */
+        @keyframes autoRun{ from{ transform: perspective(1000px) rotateX(-16deg) rotateY(0deg); } to{ transform: perspective(1000px) rotateX(-16deg) rotateY(360deg); } }
         #skills .slider {
-            position: relative;
-            width: 220px;
-            height: 300px; 
-            margin: 60px auto; 
-            transform-style: preserve-3d;
-            transform: perspective(1000px);
-            animation: autoRun 25s linear infinite; 
-            z-index: 2;
+            position: relative; width: 220px; height: 300px; margin: 60px auto; 
+            transform-style: preserve-3d; transform: perspective(1000px);
+            animation: autoRun 25s linear infinite; z-index: 2;
         }
-        
         #skills .slider .item {
-            position: absolute;
-            inset: 0 0 0 0;
-            transform: 
-                rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
-                translateZ(350px);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            position: absolute; inset: 0 0 0 0;
+            transform: rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(350px);
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px;
             transition: all 0.3s ease;
         }
-        
         #skills .slider .item:hover {
-            transform: 
-                rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
-                translateZ(360px) 
-                translateY(-10px) 
-                scale(1.05); 
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(229, 9, 20, 0.5);
+            transform: rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(360px) translateY(-10px) scale(1.05); 
+            background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(229, 9, 20, 0.5);
             box-shadow: 0 0 25px rgba(229, 9, 20, 0.5);
         }
-        
-        #skills .slider .item i {
-            font-size: 5em;
-            color: var(--primary-red); 
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-        
-        #skills .slider .item h3 {
-            font-family: 'Noto Serif Kannada', serif; /* Updated font for skills */
-            font-size: 1.3em; 
-            color: #f0f0f0; 
-            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
-            font-weight: 600;
-        }
+        #skills .slider .item i { font-size: 5em; color: var(--primary-red); text-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+        #skills .slider .item h3 { font-family: 'Noto Serif Kannada', serif; font-size: 1.3em; color: #f0f0f0; text-shadow: 0 2px 5px rgba(0,0,0,0.3); font-weight: 600; }
 
-        .section-divider {
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            overflow: hidden;
-            line-height: 0;
-            transform: rotate(180deg);
-        }
-        .section-divider-top {
-            top: -1px;
-            bottom: auto;
-        }
-        .section-divider svg {
-            position: relative;
-            display: block;
-            width: calc(100% + 1.3px);
-            height: 80px;
-        }
-        .section-divider .shape-fill {
-            fill: #111;
-        }
-        #skills .section-divider-top .shape-fill,
-        #contact .section-divider-top .shape-fill {
-            fill: #0a0a0a;
-        }
-        #skills .section-divider .shape-fill {
-            fill: #0a0a0a;
-        }
+        .section-divider { position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }
+        .section-divider-top { top: -1px; bottom: auto; }
+        .section-divider svg { position: relative; display: block; width: calc(100% + 1.3px); height: 80px; }
+        .section-divider .shape-fill { fill: #111; }
+        #skills .section-divider-top .shape-fill, #contact .section-divider-top .shape-fill { fill: #0a0a0a; }
+        #skills .section-divider .shape-fill { fill: #0a0a0a; }
         
-        .scroll-target {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .scroll-target.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .scroll-target { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .scroll-target.visible { opacity: 1; transform: translateY(0); }
 
         #scrollTopBtn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: var(--primary-red);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-            cursor: pointer;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            z-index: 100;
+            position: fixed; bottom: 20px; right: 20px; background-color: var(--primary-red); color: white;
+            border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer;
+            display: none; opacity: 0; transition: opacity 0.3s, transform 0.3s; z-index: 100;
         }
-
-        #scrollTopBtn.show {
-            display: block;
-            opacity: 1;
-        }
-        #scrollTopBtn:hover {
-            transform: scale(1.1);
-            background-color: var(--primary-red-dark);
-        }
+        #scrollTopBtn.show { display: block; opacity: 1; }
+        #scrollTopBtn:hover { transform: scale(1.1); background-color: var(--primary-red-dark); }
 
         #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #0a0a0a;
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.5s ease;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #0a0a0a;
+            z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease;
         }
-        .loader-text {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #fff;
-            animation: pulse 1.5s infinite;
-            font-family: 'IBM Plex Mono', monospace; /* Keep English for Logo */
-        }
-        .loader-bracket {
-            color: var(--primary-red);
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        .loader-text { font-size: 2rem; font-weight: 600; color: #fff; animation: pulse 1.5s infinite; font-family: 'IBM Plex Mono', monospace; }
+        .loader-bracket { color: var(--primary-red); }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.1); opacity: 0.7; } 100% { transform: scale(1); opacity: 1; } }
         
         .section-bg {
-            background-image:
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
         }
 
-        .social-icon {
-            transition: all 0.3s ease;
-        }
-        .social-icon:hover {
-            text-shadow: 0 0 15px var(--primary-red);
-        }
+        .social-icon { transition: all 0.3s ease; }
+        .social-icon:hover { text-shadow: 0 0 15px var(--primary-red); }
 
         #side-nav a {
-            width: 12px;
-            height: 12px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            position: relative;
+            width: 12px; height: 12px; background-color: rgba(255, 255, 255, 0.3); border-radius: 50%;
+            transition: all 0.3s ease; position: relative;
         }
-        #side-nav a:hover {
-            background-color: var(--primary-red);
-            transform: scale(1.5);
-        }
-        #side-nav a.active {
-            background-color: var(--primary-red);
-            transform: scale(1.5);
-            box-shadow: 0 0 10px var(--primary-red);
-        }
-
+        #side-nav a:hover { background-color: var(--primary-red); transform: scale(1.5); }
+        #side-nav a.active { background-color: var(--primary-red); transform: scale(1.5); box-shadow: 0 0 10px var(--primary-red); }
         #side-nav a::before {
-            content: attr(data-tooltip);
-            position: absolute;
-            top: 50%;
-            right: 150%;
-            transform: translateY(-50%);
-            background-color: #1a1a1a;
-            color: #f0f0f0;
-            padding: 4px 8px;
-            border-radius: 4px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            font-size: 12px;
-            font-family: 'Noto Serif Kannada', serif;
+            content: attr(data-tooltip); position: absolute; top: 50%; right: 150%; transform: translateY(-50%);
+            background-color: #1a1a1a; color: #f0f0f0; padding: 4px 8px; border-radius: 4px; white-space: nowrap;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease; font-size: 12px; font-family: 'Noto Serif Kannada', serif;
         }
-        #side-nav a:hover::before {
-            opacity: 1;
-        }
+        #side-nav a:hover::before { opacity: 1; }
         
         @media screen and (max-width: 1023px) {
-            #skills .slider {
-                width: 180px;
-                height: 220px;
-            }
-            #skills .slider .item {
-                transform: 
-                    rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
-                    translateZ(280px);
-            }
+            #skills .slider { width: 180px; height: 220px; }
+            #skills .slider .item { transform: rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(280px); }
             #skills .slider .item i { font-size: 4em; }
             #skills .slider .item h3 { font-size: 1.2em; }
         }
         @media screen and (max-width: 767px) {
-            #skills .slider {
-                width: 130px;
-                height: 180px;
-                margin: 40px auto;
-            }
-            #skills .slider .item {
-                transform: 
-                    rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg))
-                    translateZ(180px);
-                gap: 10px;
-            }
+            #skills .slider { width: 130px; height: 180px; margin: 40px auto; }
+            #skills .slider .item { transform: rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(180px); gap: 10px; }
             #skills .slider .item i { font-size: 3em; }
             #skills .slider .item h3 { font-size: 1em; }
         }
@@ -432,6 +236,16 @@
                 <a href="#skills" class="nav-link text-sm">ಕೌಶಲ್ಯಗಳು</a>
                 <a href="education.html" class="nav-link text-sm">ವಿದ್ಯಾಭ್ಯಾಸ</a>
                 <a href="#contact" class="nav-link text-sm">ಸಂಪರ್ಕ</a>
+                
+                <!-- ========================================== -->
+                <!-- LANGUAGE SWITCHER (DESKTOP) START -->
+                <!-- Replace 'index.html' with your actual English file name later -->
+                <a href="index.html" class="lang-btn" title="Switch to English">
+                    <i class="fas fa-language"></i> <span class="en-text">English</span>
+                </a>
+                <!-- LANGUAGE SWITCHER END -->
+                <!-- ========================================== -->
+                
             </nav>
             <button id="mobile-menu-btn" class="md:hidden text-2xl z-50"><i class="fas fa-bars"></i></button>
         </div>
@@ -442,6 +256,16 @@
                 <a href="#skills" class="nav-link text-lg">ಕೌಶಲ್ಯಗಳು</a>
                 <a href="education.html" class="nav-link text-lg">ವಿದ್ಯಾಭ್ಯಾಸ</a>
                 <a href="#contact" class="nav-link text-lg">ಸಂಪರ್ಕ</a>
+                
+                <!-- ========================================== -->
+                <!-- LANGUAGE SWITCHER (MOBILE) START -->
+                <!-- Replace 'index.html' with your actual English file name later -->
+                <a href="index.html" class="lang-btn border-white text-lg mt-4">
+                    <i class="fas fa-language"></i> <span class="en-text">Switch to English</span>
+                </a>
+                <!-- LANGUAGE SWITCHER END -->
+                <!-- ========================================== -->
+
             </nav>
         </div>
     </header>
