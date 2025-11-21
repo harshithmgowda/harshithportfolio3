@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Harshith Gowda M</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Kannada:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-red: #E50914;
+            --primary-red-dark: #B20710;
+            --mouse-x: 50vw;
+            --mouse-y: 50vh;
+        }
+
+        /* Custom Styles */
+        body {
+            font-family: 'IBM Plex Mono', monospace;
+            background-color: #0a0a0a;
+            color: #f0f0f0;
+            scroll-behavior: smooth;
+        }
+
+        /* Interactive Cursor Glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(229, 9, 20, 0.15), transparent 80%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-red-dark);
+        }
+
+        .primary-red {
+            color: var(--primary-red);
+        }
+
+        #header.scrolled {
+            background-color: #000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+        }
+
+        /* Language Switcher Button Style */
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            border: 1px solid var(--primary-red);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            background: rgba(229, 9, 20, 0.1);
+        }
+
+        .lang-btn:hover {
+            background: var(--primary-red);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.6);
+        }
+
+        /* Kannada text inside the button */
+        .kn-text {
+            font-family: 'Noto Serif Kannada', serif;
+            font-weight: 700;
+        }
+
+        /* Shimmer Button */
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 5px rgba(229, 9, 20, 0);
+        }
+
+        .shimmer-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 15px rgba(229, 9, 20, 0.8), 0 0 25px rgba(229, 9, 20, 0.6);
+        }
+
+        .shimmer-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-20deg);
+            transition: left 0.7s ease-in-out;
+        }
+
+        .shimmer-btn:hover::before {
+            left: 150%;
+        }
+
+        .scroll-target {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .scroll-target.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-red);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 100;
+        }
+
+        #scrollTopBtn.show {
+            display: block;
+            opacity: 1;
+        }
+
+        #scrollTopBtn:hover {
+            transform: scale(1.1);
+            background-color: var(--primary-red-dark);
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #0a0a0a;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader-text {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            animation: pulse 1.5s infinite;
+        }
+
+        .loader-bracket {
+            color: var(--primary-red);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .section-bg {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Project Card Styles */
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-red), #ff4d4d);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(229, 9, 20, 0.5);
+            box-shadow: 0 10px 40px rgba(229, 9, 20, 0.3);
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-icon {
+            transform: scale(1.1) rotate(5deg);
+            text-shadow: 0 0 20px rgba(229, 9, 20, 0.8);
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(229, 9, 20, 0.2);
+            border: 1px solid rgba(229, 9, 20, 0.4);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin: 0.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            background: rgba(229, 9, 20, 0.4);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body class="bg-black">
+
+    <div id="preloader">
+        <div class="loader-text">
+            <span class="loader-bracket">&lt;</span> HG <span class="loader-bracket">/&gt;</span>
+        </div>
+    </div>
+
+    <header id="header"
+        class="bg-black/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-semibold hover:text-primary-red transition-colors duration-300">
+                <span class="primary-red">&lt;</span>HarshithGowdaM <span class="primary-red">/&gt;</span>
+            </a>
+            <nav class="hidden md:flex space-x-8 items-center">
+                <a href="index.html#home" class="nav-link text-sm">Home</a>
+                <a href="index.html#about" class="nav-link text-sm">About</a>
+                <a href="index.html#skills" class="nav-link text-sm">Skills</a>
+                <a href="education.html" class="nav-link text-sm">Education</a>
+                <a href="projects.html" class="nav-link text-sm active">Projects</a>
+                <a href="index.html#contact" class="nav-link text-sm">Contact</a>
+
+                <a href="index2.html" class="lang-btn" title="Switch to Kannada">
+                    <i class="fas fa-language"></i> <span class="kn-text">ಕನ್ನಡ</span>
+                </a>
+
+            </nav>
+            <button id="mobile-menu-btn" class="md:hidden text-2xl z-50"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden absolute top-0 left-0 w-full h-screen bg-black/95">
+            <nav class="flex flex-col items-center justify-center h-full space-y-8">
+                <a href="index.html#home" class="nav-link text-lg">Home</a>
+                <a href="index.html#about" class="nav-link text-lg">About</a>
+                <a href="index.html#skills" class="nav-link text-lg">Skills</a>
+                <a href="education.html" class="nav-link text-lg">Education</a>
+                <a href="projects.html" class="nav-link text-lg active">Projects</a>
+                <a href="index.html#contact" class="nav-link text-lg">Contact</a>
+
+                <a href="index2.html" class="lang-btn border-white text-lg mt-4">
+                    <i class="fas fa-language"></i> <span class="kn-text">ಕನ್ನಡಕ್ಕೆ ಬದಲಿಸಿ</span>
+                </a>
+
+
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="projects" class="relative min-h-screen py-32 bg-[#0a0a0a] section-bg">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-semibold text-center mb-6 scroll-target">
+                    My <span class="primary-red">Projects</span>
+                </h2>
+                <p class="text-center text-gray-400 mb-16 max-w-2xl mx-auto scroll-target">
+                    Explore my latest work and contributions to innovative solutions
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Smart Attendance Monitor Project -->
+                    <div class="project-card scroll-target">
+                        <div class="project-icon">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">Smart Attendance Monitor</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            An intelligent attendance tracking system using facial recognition and AI to automate and
+                            streamline attendance management.
+                        </p>
+                        <div class="mb-4">
+                            <span class="tech-badge">typescript</span>
+                            <span class="tech-badge">supabase backend</span>
+                            <span class="tech-badge">Computer Vision</span>
+                            <span class="tech-badge">React</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="https://github.com/harshithmgowda/smartattendencemonitor.git" target="_blank"
+                                rel="noopener noreferrer"
+                                class="shimmer-btn inline-flex items-center gap-2 bg-primary-red text-white font-medium py-2 px-6 rounded-full text-sm hover:bg-primary-red-dark">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder for future projects -->
+                    <div class="project-card scroll-target opacity-50">
+                        <div class="project-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3">More Projects Coming Soon</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Stay tuned for more exciting projects and innovations!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black py-6">
+        <div class="container mx-auto px-6 text-center text-gray-500 text-sm">
+            <p>&copy; 2024 Harshith Gowda M. Designed with <i class="fas fa-heart primary-red"></i> and code.</p>
+        </div>
+    </footer>
+
+    <button id="scrollTopBtn" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            document.getElementById('preloader').style.opacity = '0';
+            setTimeout(() => { document.getElementById('preloader').style.display = 'none'; }, 500);
+        });
+
+        // Interactive Cursor Glow
+        window.addEventListener('mousemove', e => {
+            document.documentElement.style.setProperty('--mouse-x', e.clientX + 'px');
+            document.documentElement.style.setProperty('--mouse-y', e.clientY + 'px');
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn'), mobileMenu = document.getElementById('mobile-menu'), mobileMenuIcon = mobileMenuBtn.querySelector('i');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuIcon.classList.toggle('fa-bars', mobileMenu.classList.contains('hidden'));
+            mobileMenuIcon.classList.toggle('fa-times', !mobileMenu.classList.contains('hidden'));
+        });
+        document.querySelectorAll('#mobile-menu .nav-link').forEach(link => link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            mobileMenuIcon.classList.add('fa-bars'); mobileMenuIcon.classList.remove('fa-times');
+        }));
+
+        // Scroll animations
+        const scrollObserver = new IntersectionObserver((entries) => entries.forEach(entry => entry.target.classList.toggle('visible', entry.isIntersecting)), { threshold: 0.1 });
+        document.querySelectorAll('.scroll-target').forEach(target => scrollObserver.observe(target));
+
+        // Scroll-to-top button
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
+        window.onscroll = () => scrollTopBtn.classList.toggle('show', document.body.scrollTop > 300 || document.documentElement.scrollTop > 300);
+        scrollTopBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    </script>
+</body>
+
+</html>

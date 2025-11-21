@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -36,20 +38,38 @@
             z-index: -1;
             pointer-events: none;
         }
-        
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1a1a1a; }
-        ::-webkit-scrollbar-thumb { background: var(--primary-red); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary-red-dark); }
 
-        .primary-red { color: var(--primary-red); }
-        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-red);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-red-dark);
+        }
+
+        .primary-red {
+            color: var(--primary-red);
+        }
+
         #header.scrolled {
             background-color: #000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .nav-link { position: relative; transition: color 0.3s ease; }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -61,9 +81,17 @@
             background-color: var(--primary-red);
             transition: width 0.3s ease;
         }
-        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
-        .nav-link:hover, .nav-link.active { color: white; }
-        
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white;
+        }
+
         /* --- Glass Card Styles --- */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
@@ -80,17 +108,17 @@
             border: 1px solid rgba(170, 130, 255, 0.5);
             box-shadow: 0 0 25px rgba(170, 130, 255, 0.4);
         }
-        
+
         .glass-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(
-                circle at var(--mouse-x-card, 50%) var(--mouse-y-card, 50%),
-                rgba(200, 180, 255, 0.15),
-                transparent 40%
-            );
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--mouse-x-card, 50%) var(--mouse-y-card, 50%),
+                    rgba(200, 180, 255, 0.15),
+                    transparent 40%);
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: 1;
@@ -99,34 +127,70 @@
         .glass-card:hover::before {
             opacity: 1;
         }
-        
-        .glass-card > * {
+
+        .glass-card>* {
             position: relative;
             z-index: 2;
         }
 
 
         #preloader {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #0a0a0a; z-index: 9999;
-            display: flex; justify-content: center; align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #0a0a0a;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transition: opacity 0.5s ease;
         }
-        .loader-text { font-size: 2rem; font-weight: 600; color: #fff; animation: pulse 1.5s infinite; }
-        .loader-bracket { color: var(--primary-red); }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
+
+        .loader-text {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #fff;
+            animation: pulse 1.5s infinite;
         }
-        .social-icon { transition: all 0.3s ease; }
-        .social-icon:hover { text-shadow: 0 0 15px var(--primary-red); color: var(--primary-red); }
+
+        .loader-bracket {
+            color: var(--primary-red);
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            text-shadow: 0 0 15px var(--primary-red);
+            color: var(--primary-red);
+        }
 
         /* --- Timeline Styles --- */
         .timeline {
             position: relative;
             padding-left: 50px;
         }
+
         .timeline::before {
             content: '';
             position: absolute;
@@ -137,7 +201,7 @@
             background-color: #333;
             border-radius: 2px;
         }
-        
+
         .timeline-item {
             position: relative;
             margin-bottom: 50px;
@@ -145,13 +209,16 @@
             transform: translateY(50px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
+
         .timeline-item.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
+
         .timeline-item:last-child {
             margin-bottom: 0;
         }
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -165,6 +232,7 @@
             border: 3px solid var(--primary-red);
             z-index: 1;
         }
+
         .timeline-item::after {
             content: '';
             position: absolute;
@@ -189,17 +257,20 @@
         }
     </style>
 </head>
+
 <body class="bg-black">
-    
+
     <div id="preloader">
         <div class="loader-text">
             <span class="loader-bracket">&lt;</span> HG <span class="loader-bracket">/&gt;</span>
         </div>
     </div>
 
-    <header id="header" class="bg-black/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <header id="header"
+        class="bg-black/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="index.html#home" class="text-xl font-semibold hover:text-primary-red transition-colors duration-300">
+            <a href="index.html#home"
+                class="text-xl font-semibold hover:text-primary-red transition-colors duration-300">
                 <span class="primary-red">&lt;</span>HarshithGowdaM <span class="primary-red">/&gt;</span>
             </a>
             <nav class="hidden md:flex space-x-8 items-center">
@@ -207,6 +278,7 @@
                 <a href="index.html#about" class="nav-link text-sm">About</a>
                 <a href="index.html#skills" class="nav-link text-sm">Skills</a>
                 <a href="education.html" class="nav-link text-sm active">Education</a>
+                <a href="projects.html" class="nav-link text-sm">Projects</a>
                 <a href="index.html#contact" class="nav-link text-sm">Contact</a>
             </nav>
             <button id="mobile-menu-btn" class="md:hidden text-2xl z-50"><i class="fas fa-bars"></i></button>
@@ -217,18 +289,22 @@
                 <a href="index.html#about" class="nav-link text-lg">About</a>
                 <a href="index.html#skills" class="nav-link text-lg">Skills</a>
                 <a href="education.html" class="nav-link text-lg">Education</a>
+                <a href="projects.html" class="nav-link text-lg">Projects</a>
                 <a href="index.html#contact" class="nav-link text-lg">Contact</a>
             </nav>
         </div>
     </header>
 
     <main>
-        <section id="education-banner" class="relative h-[50vh] flex items-center justify-center text-white bg-cover bg-center" style="background-image: url('https://jssstuniv.in/assets/img/jssstu-2.jpg');">
+        <section id="education-banner"
+            class="relative h-[50vh] flex items-center justify-center text-white bg-cover bg-center"
+            style="background-image: url('https://jssstuniv.in/assets/img/jssstu-2.jpg');">
             <div class="absolute inset-0 bg-black/60 z-1"></div>
             <canvas id="raining-code-canvas"></canvas>
             <div class="relative z-10 text-center p-6">
                 <h1 class="text-4xl md:text-6xl font-bold" style="color: #c9a6ff;">Educational Background</h1>
-                <p class="mt-4 text-lg md:text-xl italic text-gray-300">"An investment in knowledge pays the best interest." – Benjamin Franklin</p>
+                <p class="mt-4 text-lg md:text-xl italic text-gray-300">"An investment in knowledge pays the best
+                    interest." – Benjamin Franklin</p>
             </div>
         </section>
 
@@ -239,16 +315,20 @@
                     <div class="timeline-item">
                         <div class="glass-card p-6 md:p-8">
                             <div class="flex flex-col md:flex-row items-center gap-6">
-                                <img src="college-main.jpg" alt="SJCE College Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
+                                <img src="college-main.jpg" alt="SJCE College Photo"
+                                    class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
                                 <div class="w-full md:w-2/3">
                                     <p class="text-sm primary-red font-medium mb-1">2024 — 2028</p>
                                     <h3 class="text-2xl font-semibold text-white mb-2">Bachelor of Engineering, CSE</h3>
-                                    <p class="text-lg text-gray-300">Sri Jayachamarajendra College of Engineering (SJCE), JSS STU, Mysuru</p>
-                                    
+                                    <p class="text-lg text-gray-300">Sri Jayachamarajendra College of Engineering
+                                        (SJCE), JSS STU, Mysuru</p>
+
                                     <!-- ADDED: CGPA Section -->
-                                    <div class="mt-4 inline-block border border-gray-700 bg-black/30 rounded-full px-4 py-1">
+                                    <div
+                                        class="mt-4 inline-block border border-gray-700 bg-black/30 rounded-full px-4 py-1">
                                         <p class="text-sm text-gray-300">
-                                            First Year CGPA: <span class="text-white font-bold text-base ml-1">9.5</span>
+                                            First Year CGPA: <span
+                                                class="text-white font-bold text-base ml-1">9.5</span>
                                         </p>
                                     </div>
                                 </div>
@@ -259,7 +339,8 @@
                     <div class="timeline-item">
                         <div class="glass-card p-6 md:p-8">
                             <div class="flex flex-col md:flex-row items-center gap-6">
-                                <img src="college-2.jpg" alt="Shanthinikethan PU College Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
+                                <img src="college-2.jpg" alt="Shanthinikethan PU College Photo"
+                                    class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
                                 <div class="w-full md:w-2/3">
                                     <p class="text-sm primary-red font-medium mb-1">6th — 12th</p>
                                     <h3 class="text-2xl font-semibold text-white mb-2">Pre-University Education</h3>
@@ -272,7 +353,8 @@
                     <div class="timeline-item">
                         <div class="glass-card p-6 md:p-8">
                             <div class="flex flex-col md:flex-row items-center gap-6">
-                                <img src="college-3.jpg" alt="BGS Public School Photo" class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
+                                <img src="college-3.jpg" alt="BGS Public School Photo"
+                                    class="w-full md:w-1/3 h-auto rounded-lg shadow-lg object-cover">
                                 <div class="w-full md:w-2/3">
                                     <p class="text-sm primary-red font-medium mb-1">1st — 5th</p>
                                     <h3 class="text-2xl font-semibold text-white mb-2">Primary School Education</h3>
@@ -290,13 +372,20 @@
     <footer class="bg-black py-10">
         <div class="container mx-auto px-6 text-center text-gray-400">
             <div class="mb-6 flex justify-center space-x-8">
-                <a href="https://www.linkedin.com/in/harshith-gowda-m-391205332/" target="_blank" rel="noopener noreferrer" class="social-icon text-3xl text-gray-400 hover:scale-125 transition-all duration-300"><i class="fab fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/harshith.gowda_m284/?__pwa=1" target="_blank" rel="noopener noreferrer" class="social-icon text-3xl text-gray-400 hover:scale-125 transition-all duration-300"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/harshith-gowda-m-391205332/" target="_blank"
+                    rel="noopener noreferrer"
+                    class="social-icon text-3xl text-gray-400 hover:scale-125 transition-all duration-300"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/harshith.gowda_m284/?__pwa=1" target="_blank"
+                    rel="noopener noreferrer"
+                    class="social-icon text-3xl text-gray-400 hover:scale-125 transition-all duration-300"><i
+                        class="fab fa-instagram"></i></a>
             </div>
-            <p class="text-sm text-gray-500">&copy; 2024 Harshith Gowda M. Designed with <i class="fas fa-heart primary-red"></i> and code.</p>
+            <p class="text-sm text-gray-500">&copy; 2024 Harshith Gowda M. Designed with <i
+                    class="fas fa-heart primary-red"></i> and code.</p>
         </div>
     </footer>
-    
+
     <script>
         // Preloader
         window.addEventListener('load', () => {
@@ -321,7 +410,7 @@
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuIcon = mobileMenuBtn.querySelector('i');
-        
+
         mobileMenuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
             mobileMenuIcon.classList.toggle('fa-bars', mobileMenu.classList.contains('hidden'));
@@ -382,7 +471,7 @@
         if (canvas) {
             const ctx = canvas.getContext('2d');
             const banner = document.getElementById('education-banner');
-            
+
             let animationFrameId;
             const fontSize = 16;
             let columns;
@@ -431,15 +520,15 @@
                     drops[i]++;
                 }
             }
-            
+
             function animate() {
                 draw();
                 animationFrameId = requestAnimationFrame(animate);
             }
-            
+
             const preloader = document.getElementById('preloader');
-            const preloaderObserver = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
+            const preloaderObserver = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
                     if (mutation.attributeName === "style" && preloader.style.display === 'none') {
                         setupAndResize();
                         animate();
@@ -455,4 +544,5 @@
         }
     </script>
 </body>
+
 </html>
